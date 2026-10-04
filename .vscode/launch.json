@@ -1,0 +1,77 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "throwExp",
+            "request": "launch",
+            "mainClass": "throwExp",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "ass1",
+            "request": "launch",
+            "mainClass": "ass1",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "Student",
+            "request": "launch",
+            "mainClass": "Student",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "product",
+            "request": "launch",
+            "mainClass": "product",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "hotel",
+            "request": "launch",
+            "mainClass": "hotel",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "Search",
+            "request": "launch",
+            "mainClass": "Search",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "staireSearch",
+            "request": "launch",
+            "mainClass": "staireSearch",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "ass4",
+            "request": "launch",
+            "mainClass": "ass4",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "ass3",
+            "request": "launch",
+            "mainClass": "ass3",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}
