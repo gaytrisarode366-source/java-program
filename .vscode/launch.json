@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "compuGR",
+            "request": "launch",
+            "mainClass": "compuGR",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "cmpuGR",
+            "request": "launch",
+            "mainClass": "cmpuGR",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
             "name": "throwExp",
             "request": "launch",
             "mainClass": "throwExp",
