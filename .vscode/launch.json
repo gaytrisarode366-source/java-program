@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "FourPointCircle",
+            "request": "launch",
+            "mainClass": "FourPointCircle",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
+            "name": "CircleDrawing",
+            "request": "launch",
+            "mainClass": "CircleDrawing",
+            "projectName": "java program_a448e85d"
+        },
+        {
+            "type": "java",
             "name": "compuGR",
             "request": "launch",
             "mainClass": "compuGR",
