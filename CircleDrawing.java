@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import javax.swing.*;
 import java.util.Scanner;
@@ -7,17 +8,14 @@ public class CircleDrawing extends JPanel {
     static int algorithmChoice;
     static int styleChoice;
 
-    // --------------------------------------------------
     // Plot one pixel
-    // --------------------------------------------------
     void plot(Graphics g, int x, int y) {
         g.fillRect(x, y, 2, 2);
     }
 
-    // --------------------------------------------------
     // DDA Circle Drawing Algorithm
-    // --------------------------------------------------
-    void drawDDACircle(Graphics g, int xc, int yc, int r, int style) {
+    void drawDDACircle(Graphics g, int xc, int yc,
+                       int r, int style) {
 
         double theta = 0;
         double step = 1.0 / r;
@@ -25,47 +23,40 @@ public class CircleDrawing extends JPanel {
 
         while (theta <= 2 * Math.PI) {
 
-            int x = (int) Math.round(xc + r * Math.cos(theta));
-            int y = (int) Math.round(yc + r * Math.sin(theta));
+            int x = (int) Math.round(
+                xc + r * Math.cos(theta)
+            );
+
+            int y = (int) Math.round(
+                yc + r * Math.sin(theta)
+            );
 
             boolean draw = false;
 
             if (style == 1) {
-                // Solid
                 draw = true;
-            }
-            else if (style == 2) {
-                // Dotted
-                if (count % 5 == 0) {
-                    draw = true;
-                }
-            }
-            else if (style == 3) {
-                // Dashed
-                if (count % 12 < 7) {
-                    draw = true;
-                }
+            } else if (style == 2) {
+                draw = (count % 5 == 0);
+            } else if (style == 3) {
+                draw = (count % 12 < 7);
             }
 
             if (draw) {
                 plot(g, x, y);
             }
 
-            theta = theta + step;
+            theta += step;
             count++;
         }
     }
 
-    // --------------------------------------------------
     // Bresenham Circle Drawing Algorithm
-    // --------------------------------------------------
     void drawBresenhamCircle(Graphics g, int xc, int yc,
                              int r, int style) {
 
         int x = 0;
         int y = r;
-
-        int d = 3 - (2 * r);
+        int d = 3 - 2 * r;
         int count = 0;
 
         while (x <= y) {
@@ -73,30 +64,20 @@ public class CircleDrawing extends JPanel {
             boolean draw = false;
 
             if (style == 1) {
-                // Solid
                 draw = true;
-            }
-            else if (style == 2) {
-                // Dotted
-                if (count % 3 == 0) {
-                    draw = true;
-                }
-            }
-            else if (style == 3) {
-                // Dashed
-                if (count % 6 < 4) {
-                    draw = true;
-                }
+            } else if (style == 2) {
+                draw = (count % 3 == 0);
+            } else if (style == 3) {
+                draw = (count % 6 < 4);
             }
 
             if (draw) {
-               plotEightPoints(g, xc, yc, x, y);
+                plotEightPoints(g, xc, yc, x, y);
             }
 
             if (d < 0) {
-                d = d + (4 * x) + 6;
-            }
-            else {
+                d = d + 4 * x + 6;
+            } else {
                 d = d + 4 * (x - y) + 10;
                 y--;
             }
@@ -106,15 +87,12 @@ public class CircleDrawing extends JPanel {
         }
     }
 
-    // --------------------------------------------------
     // Midpoint Circle Drawing Algorithm
-    // --------------------------------------------------
     void drawMidpointCircle(Graphics g, int xc, int yc,
                             int r, int style) {
 
         int x = 0;
         int y = r;
-
         int p = 1 - r;
         int count = 0;
 
@@ -123,79 +101,78 @@ public class CircleDrawing extends JPanel {
             boolean draw = false;
 
             if (style == 1) {
-                // Solid
                 draw = true;
-            }
-            else if (style == 2) {
-                // Dotted
-                if (count % 3 == 0) {
-                    draw = true;
-                }
-            }
-            else if (style == 3) {
-                // Dashed
-                if (count % 6 < 4) {
-                    draw = true;
-                }
+            } else if (style == 2) {
+                draw = (count % 3 == 0);
+            } else if (style == 3) {
+                draw = (count % 6 < 4);
             }
 
-            //if (draw) {
-            //    plotEightPoints(g, xc, yc, x, y);
-            //}
+            // Plot only when selected by the style
+            if (draw) {
+                plotEightPoints(g, xc, yc, x, y);
+            }
 
             x++;
 
             if (p < 0) {
-                p = p + (2 * x) + 1;
-            }
-            else {
+                p = p + 2 * x + 1;
+            } else {
                 y--;
-                p = p + (2 * (x - y)) + 1;
+                p = p + 2 * (x - y) + 1;
             }
 
             count++;
         }
     }
 
-    // --------------------------------------------------
-    // Plot 8 Symmetrical Points
-    // --------------------------------------------------
+    // Plot 8 symmetric points using a 2D array
     void plotEightPoints(Graphics g, int xc, int yc,
                          int x, int y) {
 
-       
+        int[][] points = {
+            { x,  y},
+            {-x,  y},
+            { x, -y},
+            {-x, -y},
+            { y,  x},
+            {-y,  x},
+            { y, -x},
+            {-y, -x}
+        };
+
+        for (int i = 0; i < points.length; i++) {
+            plot(g,
+                 xc + points[i][0],
+                 yc + points[i][1]);
+        }
     }
 
-    // --------------------------------------------------
     // Display Circle
-    // --------------------------------------------------
     @Override
     protected void paintComponent(Graphics g) {
 
         super.paintComponent(g);
 
+        g.setColor(Color.BLUE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
 
-        String algorithm = "";
-        String style = "";
+        String algorithm;
+        String style;
 
         if (algorithmChoice == 1) {
             algorithm = "DDA Circle";
-        }
-        else if (algorithmChoice == 2) {
+        } else if (algorithmChoice == 2) {
             algorithm = "Bresenham Circle";
-        }
-        else {
+        } else {
             algorithm = "Midpoint Circle";
         }
 
         if (styleChoice == 1) {
             style = "Solid";
-        }
-        else if (styleChoice == 2) {
+        } else if (styleChoice == 2) {
             style = "Dotted";
-        }
-        else {
+        } else {
             style = "Dashed";
         }
 
@@ -206,24 +183,15 @@ public class CircleDrawing extends JPanel {
         int radius = 150;
 
         if (algorithmChoice == 1) {
-
             drawDDACircle(g, xc, yc, radius, styleChoice);
-
-        }
-        else if (algorithmChoice == 2) {
-
+        } else if (algorithmChoice == 2) {
             drawBresenhamCircle(g, xc, yc, radius, styleChoice);
-
-        }
-        else {
-
+        } else {
             drawMidpointCircle(g, xc, yc, radius, styleChoice);
         }
     }
 
-    // --------------------------------------------------
     // Main Method
-    // --------------------------------------------------
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -232,54 +200,46 @@ public class CircleDrawing extends JPanel {
         System.out.println("       CIRCLE DRAWING PROGRAM");
         System.out.println("--------------------------------------");
 
-        // Algorithm menu
         System.out.println("\nSelect Circle Drawing Algorithm:");
-        System.out.println("1. DDA Circle Drawing Algorithm");
-        System.out.println("2. Bresenham Circle Drawing Algorithm");
-        System.out.println("3. Midpoint Circle Drawing Algorithm");
-
+        System.out.println("1. DDA");
+        System.out.println("2. Bresenham");
+        System.out.println("3. Midpoint");
         System.out.print("Enter your choice: ");
+
         algorithmChoice = sc.nextInt();
 
-        // Style menu
         System.out.println("\nSelect Circle Style:");
         System.out.println("1. Solid");
         System.out.println("2. Dotted");
         System.out.println("3. Dashed");
-
         System.out.print("Enter your choice: ");
+
         styleChoice = sc.nextInt();
 
-        // Validation
         if (algorithmChoice < 1 || algorithmChoice > 3) {
-
             System.out.println("Invalid algorithm choice!");
             sc.close();
             return;
         }
 
         if (styleChoice < 1 || styleChoice > 3) {
-
             System.out.println("Invalid style choice!");
             sc.close();
             return;
         }
 
-        // Create window
-        JFrame frame = new JFrame("Circle Drawing Algorithms");
-
-        CircleDrawing panel = new CircleDrawing();
-
-        frame.add(panel);
-
-        frame.setSize(800, 650);
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.setLocationRelativeTo(null);
-
-        frame.setVisible(true);
-
         sc.close();
+
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Circle Drawing Algorithms");
+
+            CircleDrawing panel = new CircleDrawing();
+
+            frame.add(panel);
+            frame.setSize(800, 650);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
     }
 }
